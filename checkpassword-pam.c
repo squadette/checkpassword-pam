@@ -178,6 +178,17 @@ main (int argc, char *argv[])
     if (exit_status != 0)
 	goto out;
 
+    /* execute the program, if any */
+    if (optind < argc) {
+	debugging("Executing %s", argv[optind]);
+
+	execvp(argv[optind], argv + optind);
+	fatal("Cannot exec(%s): %s\n", argv[optind], strerror(errno));
+	exit_status = 2;
+	goto out;
+    }
+    /* if no program was provided in command-line, simply exit */
+
  out:
     memset(up, 0x00, sizeof(up));
 
