@@ -2,7 +2,7 @@
 CHECKLIST FOR CHECKPASSWORD-PAM RELEASES
 =========================================
 
-$Id: release-checklist.txt,v 1.3 2003/08/06 19:45:02 tyranny Exp $
+$Id: release-checklist.txt,v 1.4 2003/09/30 19:09:14 tyranny Exp $
 
 
 Suppose we're releasing checkpassword-pam X.YZ, while the previous
@@ -13,6 +13,8 @@ Packaging
 
 - edit configure.ac, changing previous_version and current_version
   accordingly;
+
+- edit debian/changelog, updating to new version;
 
 - autoconf; automake;
 
@@ -51,6 +53,13 @@ SourceForge
 - edit file types;
 
 - send notifications;
+
+
+Debian Packaging
+-----------------
+
+- make deb;
+
 
 
 Website
