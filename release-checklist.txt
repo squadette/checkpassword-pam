@@ -1,0 +1,71 @@
+
+CHECKLIST FOR CHECKPASSWORD-PAM RELEASES
+=========================================
+
+$Id: release-checklist.txt,v 1.1 2003/07/12 12:46:12 tyranny Exp $
+
+
+Suppose we're releasing checkpassword-pam X.YZ, while the previous
+version was X.YT.
+
+Packaging
+----------
+
+- edit configure.ac, changing previous_version and current_version
+  accordingly;
+
+- autoconf; automake;
+
+- make dist;
+
+- make diff;
+
+- examine diff, ensure everything from there is mentioned in NEWS
+  file;
+
+- make upload;
+
+
+Website
+--------
+
+- update www/index.html, updating version number;
+
+- cd www; make rsync;
+
+
+SourceForge
+------------
+
+- go to SourceForge: Admin|File Releases;
+
+- at the bottom of the page: Add Release;
+
+- New release name must be "X.YZ";
+
+- write Notes;
+
+- paste appropriate section from NEWS to Change Log, ticking "Preserve
+  my pre-formatted text";
+
+- "Submit/Refresh";
+
+- mark uploaded files and "Add Files and/or Refresh View";
+
+- edit file types;
+
+- send notifications;
+
+
+Freshmeat
+----------
+
+- got to Freshmeat;
+
+- "add release"; 
+
+- concisely describe new release;
+
+- proceed to checkout;
+
+
