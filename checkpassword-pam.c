@@ -196,13 +196,6 @@ main (int argc, char *argv[])
 	goto out;
     }
 
-    /* switch to user home directory */
-    if (chdir(pw->pw_dir) == -1) {
-	fatal("Error changing directory %s: %s", pw->pw_dir, strerror(errno));
-	exit_status = 1;
-	goto out;
-    }
-
     /* set supplementary groups */
     if (initgroups(username, pw->pw_gid) == -1) {
 	fatal("Error setting supplementary groups for user %s: %s", username, strerror(errno));
@@ -221,6 +214,13 @@ main (int argc, char *argv[])
     if (setuid(pw->pw_uid) == -1) {
 	fatal("setuid(%d) error: %s", pw->pw_uid, strerror(errno));
 	exit_status = 111;
+	goto out;
+    }
+
+    /* switch to user home directory */
+    if (chdir(pw->pw_dir) == -1) {
+	fatal("Error changing directory %s: %s", pw->pw_dir, strerror(errno));
+	exit_status = 1;
 	goto out;
     }
 

@@ -1,3 +1,8 @@
+0.98
+
+        Move chdir() after setuid()/setgid(), so that it works on NFS
+        /home.  Thanks to Robert Holzwarth.
+
 0.97
 
         Brown paper bug with -e handling (one too many negations)
