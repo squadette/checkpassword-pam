@@ -57,7 +57,7 @@ conversation (int num_msg, const struct pam_message **msgs,
 	case PAM_PROMPT_ECHO_ON: style = "PAM_PROMPT_ECHO_ON"; break;
 	case PAM_ERROR_MSG: style = "PAM_ERROR_MSG"; break;
 	case PAM_TEXT_INFO: style = "PAM_TEXT_INFO"; break;
-	default: fatal("Interla error: invalid msg_style: %d", msg->msg_style); break;
+	default: fatal("Internal error: invalid msg_style: %d", msg->msg_style); break;
 	}
 	debugging("conversation(): msg[%d], style %s, msg = \"%s\"", i, style, msg->msg);
 
@@ -118,7 +118,7 @@ authenticate_using_pam (const char* service_name,
 
     retval = pam_acct_mgmt(pamh, 0);
     if (retval != PAM_SUCCESS) {
-	fatal("Account management failed: %s", pam_strerror(pamh, retval));
+	fatal("PAM account management failed: %s", pam_strerror(pamh, retval));
 	return 1;
     }
     debugging("Account management succeeded");
