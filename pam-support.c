@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static char* global_password;
+static const char* global_password;
 
 static int
 conversation (int num_msg, const struct pam_message **msgs,
