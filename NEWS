@@ -1,7 +1,10 @@
 0.96
 
-	Remove --stdin option, because manual testing could be done
-	with a shell redirection.
+        Remove --stdin option, because manual testing could be done
+        with a shell redirection.
+
+        Provide RedHat-style checkpassword-pam.spec (courtesy
+        sysadmin(at)sunet.com.au)
 
 0.95
-	Initial version.
+        Initial version.
