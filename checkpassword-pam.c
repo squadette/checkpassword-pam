@@ -227,8 +227,9 @@ main (int argc, char *argv[])
  out:
     memset(up, 0x00, sizeof(up));
 
+    debugging("Exiting with status %d", exit_status);
+
     terminate_logging();
 
-    debugging("Exiting with status %d", exit_status);
     exit(exit_status);
 }
