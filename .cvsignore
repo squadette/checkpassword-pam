@@ -8,3 +8,6 @@ autom4te.cache
 stamp-h
 stamp-h1
 local-configure.sh
+configure.stamp
+build-stamp
+*.tar.gz
