@@ -2,7 +2,7 @@
 CHECKLIST FOR CHECKPASSWORD-PAM RELEASES
 =========================================
 
-$Id: release-checklist.txt,v 1.2 2003/07/12 12:50:51 tyranny Exp $
+$Id: release-checklist.txt,v 1.3 2003/08/06 19:45:02 tyranny Exp $
 
 
 Suppose we're releasing checkpassword-pam X.YZ, while the previous
@@ -23,17 +23,11 @@ Packaging
 - examine diff, ensure everything from there is mentioned in NEWS
   file;
 
+- cvs commit everything;
+
 - make upload;
 
 - cvs rtag CHECKPASSWORD-PAM-X-YZ checkpassword-pam;
-
-
-Website
---------
-
-- update www/index.html, updating version number;
-
-- cd www; make rsync;
 
 
 SourceForge
@@ -59,10 +53,18 @@ SourceForge
 - send notifications;
 
 
+Website
+--------
+
+- update www/index.html, bumping up version number;
+
+- cd www; make rsync;
+
+
 Freshmeat
 ----------
 
-- got to Freshmeat;
+- go to Freshmeat;
 
 - "add release"; 
 
