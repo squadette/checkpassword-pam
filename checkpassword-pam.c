@@ -31,6 +31,7 @@
 /* command line options processing */
 int opt_debugging = 0;
 static int opt_dont_set_env = 0;
+static int opt_dont_chdir_home = 0;
 int opt_use_stdout = 0;
 
 static const char* short_options = "dehs:V";
@@ -40,6 +41,7 @@ static struct option long_options[] = {
     { "debug", no_argument, NULL, 'd' },
     { "help", no_argument, NULL, 'h' },
     { "noenv", no_argument, NULL, 'e' },
+    { "no-chdir-home", no_argument, NULL, 'H' },
     { "service", required_argument, NULL, 's' },
     { "stdout", no_argument, NULL, OPT_STDOUT },
     { "version", no_argument, NULL, 'V' },
@@ -56,6 +58,7 @@ static const char* usage =
 "Options are:\n"
 "  -d, --debug\t\tturn on debugging output\n"
 "  -e, --noenv\t\tdo not set uid, gid, environment variables, \n\t\t\tand home directory\n"
+"  -H, --no-chdir-home\tdo not change to home directory\n"
 "  -h, --help\t\tdisplay this help and exit\n"
 "  -s, --service=SERVICE\tspecify PAM service name to use\n"
 "\t\t\t(by default use the contents of $PAM_SERVICE)\n"
@@ -102,6 +105,10 @@ main (int argc, char *argv[])
 
 	case 'e':
 	    opt_dont_set_env = 1;
+	    break;
+
+	case 'H':
+	    opt_dont_chdir_home = 1;
 	    break;
 	    
 	case 'h':
@@ -220,11 +227,13 @@ main (int argc, char *argv[])
 	goto out;
     }
 
-    /* switch to user home directory */
-    if (chdir(pw->pw_dir) == -1) {
-	fatal("Error changing directory %s: %s", pw->pw_dir, strerror(errno));
-	exit_status = 1;
-	goto out;
+    if (!opt_dont_chdir_home) {
+	/* switch to user home directory */
+	if (chdir(pw->pw_dir) == -1) {
+	    fatal("Error changing directory %s: %s", pw->pw_dir, strerror(errno));
+	    exit_status = 1;
+	    goto out;
+	}
     }
 
     /* set $USER */

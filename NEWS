@@ -6,6 +6,11 @@
 	Use service name in syslog instead of hard-coded
 	'checkpassword-pam' value.  Thanks to dean gaudet.
 
+	New command-line option -H/--no-chdir-home: do not chdir to
+	user home directory.  Useful in a specific case when home
+	directories are automounted, but mail is being delivered to a
+	central location.  Thanks to Christian Hudon.
+
 	Updated to Autoconf 2.59 and Automake 1.7.9.
 
 0.98
