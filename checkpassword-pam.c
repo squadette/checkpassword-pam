@@ -25,9 +25,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
 #include <unistd.h>
 
-/* command-line options processing */
+/* command line options processing */
 int opt_debugging = 0;
 int opt_use_stdout = 0;
 
@@ -63,7 +64,7 @@ const char* usage =
 #define PROTOCOL_LEN 512
 char up[PROTOCOL_LEN];
 
-/* pointers inside up[] */
+/* pointers into up[] */
 char* username = NULL;
 char* password = NULL;
 
@@ -78,7 +79,7 @@ main (int argc, char *argv[])
 
     init_logging();
 
-    /* process command-line options */
+    /* process command line options */
     opterr = 0;
     while (1) {
 	int option_index = 0;
@@ -113,7 +114,7 @@ main (int argc, char *argv[])
 	    exit(0);
 
 	case '?':
-	    fatal("Invalid command-line, see --help");
+	    fatal("Invalid command line, see --help");
 	    exit(2);
 	}
     }
@@ -222,7 +223,7 @@ main (int argc, char *argv[])
 	exit_status = 2;
 	goto out;
     }
-    /* if no program was provided in command-line, simply exit */
+    /* if no program was provided in command line, simply exit */
 
  out:
     memset(up, 0x00, sizeof(up));
