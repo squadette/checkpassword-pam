@@ -1,8 +1,8 @@
 dnl configure.ac for checkpassword-pam  -*- autoconf -*-
-AC_REVISION($Id: configure.ac,v 1.6 2003/08/03 19:21:06 tyranny Exp $)
+AC_REVISION($Id: configure.ac,v 1.7 2003/08/06 21:24:24 tyranny Exp $)
 
-define(previous_version, 0.96)
-define(current_version, 0.97)
+define(previous_version, 0.97)
+define(current_version, 0.98)
 
 AC_PREREQ(2.53)
 
