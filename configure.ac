@@ -1,11 +1,10 @@
 dnl configure.ac for checkpassword-pam  -*- autoconf -*-
-AC_REVISION($Id: configure.ac,v 1.2 2002/04/18 23:21:46 tyranny Exp $)
+AC_REVISION($Id: configure.ac,v 1.3 2002/04/27 20:47:59 tyranny Exp $)
 
 define(previous_version, none)
 define(current_version, 0.95)
 
-AC_PREREQ(2.50)
-AC_PREREQ(2.52e)
+AC_PREREQ(2.53)
 
 AC_INIT(checkpassword-pam, current_version(), checkpasswd-pam-users@lists.sourceforge.net)
 AM_INIT_AUTOMAKE(checkpassword-pam, current_version())
