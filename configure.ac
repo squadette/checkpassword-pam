@@ -1,8 +1,8 @@
 dnl configure.ac for checkpassword-pam  -*- autoconf -*-
-AC_REVISION($Id: configure.ac,v 1.4 2003/07/03 19:22:21 tyranny Exp $)
+AC_REVISION($Id: configure.ac,v 1.5 2003/07/12 12:27:40 tyranny Exp $)
 
 define(previous_version, 0.95)
-define(current_version, 0.96pre1)
+define(current_version, 0.96)
 
 AC_PREREQ(2.53)
 
@@ -23,7 +23,7 @@ AC_CHECK_LIB(dl, dlopen)
 AC_CHECK_LIB(pam, pam_start)
 
 
-AC_SUBST(PREVIOUS_VERSION, previous_version)
+AC_SUBST(PREVIOUS_VERSION, previous_version())
 
 AC_CONFIG_FILES([Makefile checkpassword-pam.spec])
 AC_OUTPUT
