@@ -30,7 +30,7 @@
 
 /* command line options processing */
 int opt_debugging = 0;
-int opt_dont_set_env = 0;
+static int opt_dont_set_env = 0;
 int opt_use_stdout = 0;
 
 static const char* short_options = "dehs:V";
@@ -46,7 +46,7 @@ static struct option long_options[] = {
     { NULL, 0, NULL, 0 }
 };
 
-const char* usage =
+static const char* usage =
 "Usage: " PACKAGE " [OPTION]... -- prog...\n"
 "\n"
 "Authenticate using PAM and the checkpassword protocol:\n"
@@ -65,11 +65,11 @@ const char* usage =
 /* checkpassword protocol support */
 #define PROTOCOL_FD 3
 #define PROTOCOL_LEN 512
-char up[PROTOCOL_LEN];
+static char up[PROTOCOL_LEN];
 
 /* pointers into up[] */
-char* username = NULL;
-char* password = NULL;
+static char* username = NULL;
+static char* password = NULL;
 
 int
 main (int argc, char *argv[])
