@@ -91,6 +91,7 @@ authenticate_using_pam (const char* service_name,
     struct pam_conv pam_conversation = { conversation, NULL };
     pam_handle_t* pamh;
     int retval;
+    char *remoteip;
 
     /* to be used later from conversation() */
     global_password = password;
@@ -103,6 +104,13 @@ authenticate_using_pam (const char* service_name,
 	return 111;
     }
     debugging("Pam library initialization succeeded");
+
+    /* provided by tcpserver */
+    remoteip = getenv("TCPREMOTEIP");
+    if (remoteip) {
+	/* we don't care if this succeeds or not */
+	pam_set_item(pamh, PAM_RHOST, remoteip);
+    }
 
     /* Authenticate the user */
     retval = pam_authenticate(pamh, 0);
