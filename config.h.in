@@ -1,5 +1,8 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Define if you have the `dl' library (-ldl). */
+#undef HAVE_LIBDL
+
 /* Define if you have the `pam' library (-lpam). */
 #undef HAVE_LIBPAM
 
@@ -8,3 +11,6 @@
 
 /* Version number of package */
 #undef VERSION
+
+/* Define to empty if `const' does not conform to ANSI C. */
+#undef const

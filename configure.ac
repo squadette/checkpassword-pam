@@ -1,5 +1,5 @@
 dnl configure.ac for checkpassword-pam  -*- autoconf -*-
-AC_REVISION($Id: configure.ac,v 1.1 2002/03/28 23:40:34 tyranny Exp $)
+AC_REVISION($Id: configure.ac,v 1.2 2002/04/18 23:21:46 tyranny Exp $)
 
 define(previous_version, none)
 define(current_version, 0.95)
@@ -16,6 +16,8 @@ AC_CONFIG_SRCDIR(checkpassword-pam.c)
 
 AC_PROG_MAKE_SET
 AC_PROG_CC
+
+AC_C_CONST
 
 # check that PAM libraries exist, together with libdl
 AC_CHECK_LIB(dl, dlopen)
