@@ -14,5 +14,10 @@
 
         Fix Solaris compilation wrt to LOG_AUTHPRIV.
 
+        Added --noenv (or -e) option, which disables setting up
+        process environment, i.e. uid, gid, groups, home directory,
+        and environment variables.  (Idea and original patch from
+        Frank Benkstein.)
+
 0.95
         Initial version.
