@@ -19,17 +19,44 @@
 #define LOGGING_H_ 1
 
 #include <stdio.h>
+#include <syslog.h>
+
+extern int opt_use_stdout;
+extern int opt_debugging;
+
+#define init_logging() \
+  do { \
+    openlog("checkpassword-pam", LOG_PID, LOG_AUTHPRIV); \
+  } while (0)
+
+
+#define terminate_logging() \
+  do { \
+    closelog(); \
+  } while (0)
+
 
 #define fatal(msg, args...) \
   do { \
-    fprintf(stderr, msg , ##args); \
-    fputc('\n', stderr); \
+    if (opt_use_stdout) { \
+      fprintf(stderr, msg , ##args); \
+      fputc('\n', stderr); \
+    } else { \
+      syslog(LOG_ERR, msg , ##args); \
+    } \
   } while (0)
+
 
 #define debugging(msg, args...) \
   do { \
-    fprintf(stderr, msg , ##args); \
-    fputc('\n', stderr); \
+    if (opt_debugging) { \
+      if (opt_use_stdout) { \
+        fprintf(stderr, msg , ##args); \
+        fputc('\n', stderr); \
+      } else { \
+        syslog(LOG_DEBUG, msg , ##args); \
+      } \
+    } \
   } while (0)
 
 

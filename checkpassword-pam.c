@@ -27,13 +27,17 @@
 
 /* command-line options processing */
 static int opt_debugging = 0;
+static int opt_use_stdout = 0;
 
 static const char* short_options = "dhs:V";
 
+enum { OPT_STDIN = 1, OPT_STDOUT = 2 };
 static struct option long_options[] = {
     { "debug", no_argument, NULL, 'd' },
     { "help", no_argument, NULL, 'h' },
     { "service", required_argument, NULL, 's' },
+    { "stdin", no_argument, NULL, OPT_STDIN },
+    { "stdout", no_argument, NULL, OPT_STDOUT },
     { "version", no_argument, NULL, 'V' },
     { NULL, 0, NULL, 0 }
 };
@@ -54,7 +58,7 @@ const char* usage =
 
 
 /* checkpassword protocol support */
-static int protocol_fd = 0;
+static int protocol_fd = 3;
 #define PROTOCOL_LEN 512
 char up[PROTOCOL_LEN];
 
@@ -127,6 +131,10 @@ main (int argc, char *argv[])
     int exit_status = 1;
     int retval;
 
+    init_logging();
+
+    /* process command-line options */
+    opterr = 0;
     while (1) {
 	int option_index = 0;
 	int c = getopt_long (argc, argv, short_options, long_options, &option_index);
@@ -135,6 +143,14 @@ main (int argc, char *argv[])
 	    break;
 
 	switch (c) {
+	case OPT_STDIN:
+	    protocol_fd = 0;
+	    break;
+
+	case OPT_STDOUT:
+	    opt_use_stdout = 1;
+	    break;
+
 	case 'd':
 	    opt_debugging = 1;
 	    break;
@@ -154,6 +170,10 @@ main (int argc, char *argv[])
 	case 'V':
 	    puts(PACKAGE " " VERSION);
 	    exit(0);
+
+	case '?':
+	    fatal("Invalid command-line, see --help");
+	    exit(2);
 	}
     }
 
@@ -208,7 +228,7 @@ main (int argc, char *argv[])
 	    goto out;
 	}
     }
-    debugging("Password '%s' read successfully", password);
+    debugging("Password read successfully");
 
     /* initialize the PAM library */
     debugging("Initializing PAM library using service name '%s'", service_name);
@@ -220,9 +240,13 @@ main (int argc, char *argv[])
     }
     debugging("Pam library initialization succeeded");
 
+    /* Authenticate the user */
     retval = pam_authenticate(pamh, 0);
     if (retval != PAM_SUCCESS) {
-	fatal("Authentication failed: %s", pam_strerror(pamh, retval));
+	/* usually PAM itself logs auth failures, but we need to see
+           how it looks from our side */
+	if (opt_debugging)
+	    fatal("Authentication failed: %s", pam_strerror(pamh, retval));
 	exit_status = 1;
 	goto out;
     }
@@ -235,7 +259,7 @@ main (int argc, char *argv[])
 	exit_status = 1;
 	goto out;
     }
-    debugging("Account management passed");
+    debugging("Account management succeeded");
 
     retval = pam_setcred(pamh, PAM_ESTABLISH_CRED);
     if (retval != PAM_SUCCESS) {
@@ -258,6 +282,9 @@ main (int argc, char *argv[])
 
  out:
     memset(up, 0x00, sizeof(up));
+
+    terminate_logging();
+
     debugging("Exiting with status %d", exit_status);
     exit(exit_status);
 }
