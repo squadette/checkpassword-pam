@@ -2,7 +2,7 @@
 CHECKLIST FOR CHECKPASSWORD-PAM RELEASES
 =========================================
 
-$Id: release-checklist.txt,v 1.1 2003/07/12 12:46:12 tyranny Exp $
+$Id: release-checklist.txt,v 1.2 2003/07/12 12:50:51 tyranny Exp $
 
 
 Suppose we're releasing checkpassword-pam X.YZ, while the previous
@@ -24,6 +24,8 @@ Packaging
   file;
 
 - make upload;
+
+- cvs rtag CHECKPASSWORD-PAM-X-YZ checkpassword-pam;
 
 
 Website
