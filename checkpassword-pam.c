@@ -33,12 +33,11 @@ int opt_use_stdout = 0;
 
 static const char* short_options = "dhs:V";
 
-enum { OPT_STDIN = 1, OPT_STDOUT = 2 };
+enum { OPT_STDOUT = 1 };
 static struct option long_options[] = {
     { "debug", no_argument, NULL, 'd' },
     { "help", no_argument, NULL, 'h' },
     { "service", required_argument, NULL, 's' },
-    { "stdin", no_argument, NULL, OPT_STDIN },
     { "stdout", no_argument, NULL, OPT_STDOUT },
     { "version", no_argument, NULL, 'V' },
     { NULL, 0, NULL, 0 }
@@ -60,7 +59,7 @@ const char* usage =
 
 
 /* checkpassword protocol support */
-static int protocol_fd = 3;
+#define PROTOCOL_FD 3
 #define PROTOCOL_LEN 512
 char up[PROTOCOL_LEN];
 
@@ -89,10 +88,6 @@ main (int argc, char *argv[])
 	    break;
 
 	switch (c) {
-	case OPT_STDIN:
-	    protocol_fd = 0;
-	    break;
-
 	case OPT_STDOUT:
 	    opt_use_stdout = 1;
 	    break;
@@ -140,9 +135,9 @@ main (int argc, char *argv[])
     }
 
     /* read the username/password */
-    protocol = fdopen(protocol_fd, "r");
+    protocol = fdopen(PROTOCOL_FD, "r");
     if (protocol == NULL) {
-	fatal("Error opening fd %d: %s", protocol_fd, strerror(errno));
+	fatal("Error opening fd %d: %s", PROTOCOL_FD, strerror(errno));
 	exit_status = 2;
 	goto out;
     }

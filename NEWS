@@ -1,3 +1,7 @@
+0.96
+
+	Remove --stdin option, because manual testing could be done
+	with a shell redirection.
 
 0.95
 	Initial version.
