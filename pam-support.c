@@ -130,6 +130,20 @@ authenticate_using_pam (const char* service_name,
     }
     debugging("Setting PAM credentials succeeded");
     
+    retval = pam_open_session(pamh, PAM_SILENT);
+    if (retval != PAM_SUCCESS) {
+	    fatal("Session opening failed: %s", pam_strerror(pamh, retval));
+		return 1;
+    }
+    debugging("PAM session opened");
+    
+    retval = pam_close_session(pamh, PAM_SILENT);
+    if (retval != PAM_SUCCESS) {
+	fatal("Session closing failed: %s", pam_strerror(pamh, retval));
+	return 1;
+    }
+    debugging("PAM session closed");
+
     /* terminate the PAM library */
     debugging("Terminating PAM library");
     retval = pam_end(pamh, retval);

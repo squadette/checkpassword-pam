@@ -6,5 +6,7 @@
         Provide RedHat-style checkpassword-pam.spec (courtesy
         sysadmin(at)sunet.com.au)
 
+        Add PAM session patch from http://www.pjwstk.edu.pl/~bartek/
+
 0.95
         Initial version.
