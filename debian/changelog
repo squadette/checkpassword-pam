@@ -1,3 +1,9 @@
+checkpassword-pam (0.99-1) unstable; urgency=low
+
+  * Update to 0.99.
+
+ -- Alexey Mahotkin <alexm@hsys.msk.ru>  Wed, 18 Aug 2004 01:12:16 +0400
+
 checkpassword-pam (0.98-1) unstable; urgency=low
 
   * Update to 0.98.
