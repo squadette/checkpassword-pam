@@ -1,0 +1,67 @@
+#! /usr/bin/make -f
+#
+# debian/rules for checkpassword-pam package
+#
+
+# Uncomment this to turn on verbose mode.
+export DH_VERBOSE=1
+
+# debhelper compatibility version to use
+export DH_COMPAT=2
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	./configure --prefix=/usr
+	touch configure.stamp
+
+.PHONY: build
+build: configure-stamp build-stamp
+build-stamp:
+	dh_testdir
+
+	$(MAKE)
+	touch build-stamp
+
+.PHONY: clean
+clean:
+	dh_testdir
+	dh_testroot
+
+	-$(MAKE) distclean
+
+	dh_clean
+
+
+.PHONY: install
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+	$(MAKE) DESTDIR=`pwd`/debian/tmp install
+
+
+.PHONY: binary-indep
+binary-indep: build install
+
+.PHONY: binary-arch
+binary-arch:
+	dh_testdir
+	dh_testroot
+	dh_movefiles
+	dh_installdocs
+	dh_installmanpages
+	dh_installchangelogs NEWS
+	dh_strip
+	dh_fixperms
+	dh_makeshlibs
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+.PHONY:
+binary: binary-indep binary-arch

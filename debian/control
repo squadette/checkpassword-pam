@@ -1,0 +1,14 @@
+Source: checkpassword-pam
+Section: admin
+Priority: optional
+Maintainer: Alexey Mahotkin <alexm@hsys.msk.ru>
+Standards-Version: 3.1.1
+Build-Depends: debhelper, libpam0g-dev (>= 0.59)
+
+Package: checkpassword-pam
+Architecture: any
+Depends: libpam0g (>= 0.59)
+Description: checkpassword- and PAM-compatible authentication program.
+ checkpassword-pam authenticates remote users with PAM using
+ checkpassword protocol described in http://cr.yp.to/checkpwd.html
+

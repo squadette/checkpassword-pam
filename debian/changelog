@@ -1,0 +1,6 @@
+checkpassword-pam (0.95-1) unstable; urgency=low
+
+  * Initial version.
+
+ -- Alexey Mahotkin <alexm@hsys.msk.ru>  Sat, 20 Apr 2002 23:44:26 +0400
+
