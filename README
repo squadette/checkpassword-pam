@@ -1,6 +1,21 @@
 
+
+	http://checkpasswd-pam.sourceforge.net/
+
+
 checkpassword-pam is an implementation of checkpassword-compatible
 authentication program.
 
 Checkpassword is described in <URL:http://cr.yp.to/checkpwd.html>
 
+
+checkpassword-pam was written from scratch.  There are several older
+packages called checkpassword-pam, derived from DJB's checkpassword
+code.   This checkpassword-pam is more modern and
+administrator-friendly.
+
+
+If you are using Linux-PAM, make sure it is more recent than 0.59.
+Incompatibilities are in the PAM conversation function (number of
+requests vs number of responses).  All modern Linux distribution use
+PAM newer than that.
