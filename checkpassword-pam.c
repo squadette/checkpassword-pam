@@ -15,6 +15,8 @@
 
 #include <config.h>
 
+#include "logging.h"
+
 #include <errno.h>
 #include <getopt.h>
 #include <security/pam_appl.h>
@@ -59,18 +61,6 @@ char up[PROTOCOL_LEN];
 /* pointers inside up[] */
 char* username = NULL;
 char* password = NULL;
-
-#define fatal(msg, args...) \
-  do { \
-    fprintf(stderr, msg , ##args); \
-    fputc('\n', stderr); \
-  } while (0)
-
-#define debugging(msg, args...) \
-  do { \
-    fprintf(stderr, msg , ##args); \
-    fputc('\n', stderr); \
-  } while (0)
 
 static int
 conversation (int num_msg, const struct pam_message **msgs,
