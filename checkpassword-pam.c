@@ -80,7 +80,7 @@ main (int argc, char *argv[])
     char* service_name = NULL;
     int exit_status = 1;
 
-    init_logging();
+    init_logging(argv[0]);
 
     /* process command line options */
     opterr = 0;
@@ -141,6 +141,9 @@ main (int argc, char *argv[])
 	    goto out;
 	}
     }
+
+    terminate_logging();
+    init_logging(service_name);
 
     /* read the username/password */
     protocol = fdopen(PROTOCOL_FD, "r");

@@ -3,6 +3,11 @@
 	Set PAM_RHOST to value of TCPREMOTEIP, which is set by
 	tcpserver.  Thanks to dean gaudet.
 
+	Use service name in syslog instead of hard-coded
+	'checkpassword-pam' value.  Thanks to dean gaudet.
+
+	Updated to Autoconf 2.59 and Automake 1.7.9.
+
 0.98
 
         Move chdir() after setuid()/setgid(), so that it works on NFS

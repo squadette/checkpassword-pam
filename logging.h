@@ -24,9 +24,9 @@
 extern int opt_use_stdout;
 extern int opt_debugging;
 
-#define init_logging() \
+#define init_logging(id) \
   do { \
-    openlog("checkpassword-pam", LOG_PID, LOG_AUTH); \
+    openlog(id, LOG_PID, LOG_AUTH); \
   } while (0)
 
 
