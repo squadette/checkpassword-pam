@@ -52,7 +52,7 @@ const char* usage =
 
 
 /* checkpassword protocol support */
-#define PROTOCOL_FD 0
+static int protocol_fd = 0;
 #define PROTOCOL_LEN 512
 char up[PROTOCOL_LEN];
 
@@ -82,7 +82,7 @@ conversation (int num_msg, const struct pam_message **msgs,
 
     /* safety check */
     if (num_msg <= 0) {
-	fatal("num_msgs <= 0");
+	fatal("Internal PAM error: num_msgs <= 0");
 	return PAM_CONV_ERR;
     }
 
@@ -102,7 +102,7 @@ conversation (int num_msg, const struct pam_message **msgs,
 	case PAM_PROMPT_ECHO_ON: style = "PAM_PROMPT_ECHO_ON"; break;
 	case PAM_ERROR_MSG: style = "PAM_ERROR_MSG"; break;
 	case PAM_TEXT_INFO: style = "PAM_TEXT_INFO"; break;
-	default: fatal("Invalid msg_style: %d", msg->msg_style); break;
+	default: fatal("Interla error: invalid msg_style: %d", msg->msg_style); break;
 	}
 	debugging("conversation(): msg[%d], style %s, msg = \"%s\"", i, style, msg->msg);
 
@@ -115,13 +115,13 @@ conversation (int num_msg, const struct pam_message **msgs,
 	    break;
 
 	default:
-	    fatal("Unknown message style: '%s'", style);
+	    fatal("Internal error: unknown message style: '%s'", style);
 	    return PAM_CONV_ERR;
 	}
 	response->resp_retcode = 0;
     }
 
-    resp = &responses;
+    *resp = responses;
 
     return PAM_SUCCESS;
 }
@@ -184,9 +184,9 @@ main (int argc, char *argv[])
     }
 
     /* read the username/password */
-    protocol = fdopen(PROTOCOL_FD, "r");
+    protocol = fdopen(protocol_fd, "r");
     if (protocol == NULL) {
-	fatal("Error opening fd %d: %s", PROTOCOL_FD, strerror(errno));
+	fatal("Error opening fd %d: %s", protocol_fd, strerror(errno));
 	exit_status = 2;
 	goto out;
     }
@@ -201,7 +201,7 @@ main (int argc, char *argv[])
     /* extract username */
     username = up + i;
     while (up[i++]) {
-	if (i == uplen) {
+	if (i >= uplen) {
 	    fatal("Checkpassword protocol failure: username not provided");
 	    exit_status = 2;
 	    goto out;
@@ -212,7 +212,7 @@ main (int argc, char *argv[])
     /* extract password */
     password = up + i;
     while (up[i++]) {
-	if (i == uplen) {
+	if (i >= uplen) {
 	    fatal("Checkpassword protocol failure: password not provided");
 	    exit_status = 2;
 	    goto out;
@@ -237,15 +237,37 @@ main (int argc, char *argv[])
 	goto out;
     }
 
+    debugging("Authentication passed");
+
+    retval = pam_acct_mgmt(pamh, 0);
+    if (retval != PAM_SUCCESS) {
+	fatal("Account management failed: %s", pam_strerror(pamh, retval));
+	exit_status = 1;
+	goto out;
+    }
+    debugging("Account management passed");
+
+    retval = pam_setcred(pamh, PAM_ESTABLISH_CRED);
+    if (retval != PAM_SUCCESS) {
+	fatal("Setting credentials failed: %s", pam_strerror(pamh, retval));
+	exit_status = 1;
+	goto out;
+    }
+    debugging("Setting PAM credentials succeeded");
     
     /* terminate the PAM library */
     debugging("Terminating PAM library");
-    pam_end(pamh, retval);
+    retval = pam_end(pamh, retval);
+    if (retval != PAM_SUCCESS) {
+	fatal("Terminating PAM failed: %s", pam_strerror(pamh, retval));
+	exit_status = 1;
+	goto out;
+    }
 
-    debugging("Exiting");
     exit_status = 0;
 
  out:
     memset(up, 0x00, sizeof(up));
+    debugging("Exiting with status %d", exit_status);
     exit(exit_status);
 }
