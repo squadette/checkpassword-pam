@@ -7,7 +7,7 @@ checkpassword-pam.8.html: ../checkpassword-pam.8
 
 .PHONY: rsync
 rsync: html
-	rsync -trvz -R -e ssh --stats *.html \
+	rsync -trvz -e ssh --stats *.html ../README ../NEWS \
 		tyranny@checkpasswd-pam.sf.net:/home/groups/c/ch/checkpasswd-pam/htdocs/
 
 .PHONY: clean
