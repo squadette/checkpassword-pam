@@ -118,7 +118,10 @@ checkpassword_pam_SOURCES = checkpassword-pam.c logging.h pam-support.h pam-supp
                             getopt.h getopt.c getopt1.c
 
 
-EXTRA_DIST = $(man_MANS) interface.html
+EXTRA_DIST = $(man_MANS) interface.html \
+             debian/changelog debian/control debian/copyright \
+             debian/docs debian/*.files debian/*.manpages debian/rules
+
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -376,7 +379,7 @@ distcleancheck_listfiles = find . -type f -print
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkinstalldirs) $(distdir)/.
+	$(mkinstalldirs) $(distdir)/. $(distdir)/debian
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -504,7 +507,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic clean-local mostlyclean-am
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
@@ -551,17 +554,18 @@ uninstall-am: uninstall-binPROGRAMS uninstall-info-am uninstall-man
 uninstall-man: uninstall-man8
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-binPROGRAMS \
-	clean-generic ctags dist dist-all dist-gzip distcheck distclean \
-	distclean-compile distclean-depend distclean-generic \
-	distclean-hdr distclean-tags distcleancheck distdir \
-	distuninstallcheck dvi dvi-am info info-am install install-am \
-	install-binPROGRAMS install-data install-data-am install-exec \
-	install-exec-am install-info install-info-am install-man \
-	install-man8 install-strip installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-compile mostlyclean-generic pdf pdf-am \
-	ps ps-am tags uninstall uninstall-am uninstall-binPROGRAMS \
-	uninstall-info-am uninstall-man uninstall-man8
+	clean-generic clean-local ctags dist dist-all dist-gzip \
+	distcheck distclean distclean-compile distclean-depend \
+	distclean-generic distclean-hdr distclean-tags distcleancheck \
+	distdir distuninstallcheck dvi dvi-am info info-am install \
+	install-am install-binPROGRAMS install-data install-data-am \
+	install-exec install-exec-am install-info install-info-am \
+	install-man install-man8 install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
+	uninstall-am uninstall-binPROGRAMS uninstall-info-am \
+	uninstall-man uninstall-man8
 
 
 .PHONY: diff
@@ -577,6 +581,17 @@ diff:
 upload:
 	ncftpput upload.sourceforge.net /incoming \
 		$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)-$(PREVIOUS_VERSION)-$(VERSION).diff.gz
+
+.PHONY: deb
+deb: dist
+	rm -rf tmp/
+	mkdir tmp/
+	tar zxfv $(PACKAGE)-$(VERSION).tar.gz -C tmp/
+	cd tmp/$(PACKAGE)-$(VERSION); dpkg-buildpackage -rfakeroot -uc -us
+
+.PHONY: clean-local
+clean-local:
+	rm -rf tmp/
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
