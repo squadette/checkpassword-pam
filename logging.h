@@ -26,7 +26,7 @@ extern int opt_debugging;
 
 #define init_logging() \
   do { \
-    openlog("checkpassword-pam", LOG_PID, LOG_AUTHPRIV); \
+    openlog("checkpassword-pam", LOG_PID, LOG_AUTH); \
   } while (0)
 
 

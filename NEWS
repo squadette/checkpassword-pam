@@ -12,5 +12,7 @@
         to checkpassword interface more strictly.  Patch from Stefan
         Aeschbacher.
 
+        Fix Solaris compilation wrt to LOG_AUTHPRIV.
+
 0.95
         Initial version.
