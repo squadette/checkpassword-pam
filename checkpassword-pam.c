@@ -20,6 +20,8 @@
 
 #include <errno.h>
 #include <getopt.h>
+#include <grp.h>
+#include <pwd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -71,6 +73,7 @@ main (int argc, char *argv[])
 {
     FILE* protocol;
     int i, uplen;
+    struct passwd* pw;
     char* service_name = NULL;
     int exit_status = 1;
 
@@ -177,6 +180,43 @@ main (int argc, char *argv[])
     exit_status = authenticate_using_pam(service_name, username, password);
     if (exit_status != 0)
 	goto out;
+
+    /* switch to proper uid/gid/groups */
+    pw = getpwnam(username);
+    if (!pw) {
+	if (opt_debugging)
+	    fatal("Error getting information about %s from /etc/passwd: %s", username, strerror(errno));
+	exit_status = 2;
+	goto out;
+    }
+
+    /* switch to user home directory */
+    if (chdir(pw->pw_dir) == -1) {
+	fatal("Error changing directory %s: %s", pw->pw_dir, strerror(errno));
+	exit_status = 1;
+	goto out;
+    }
+
+    /* set supplementary groups */
+    if (initgroups(username, pw->pw_gid) == -1) {
+	fatal("Error setting supplementary groups for user %s: %s", username, strerror(errno));
+	exit_status = 111;
+	goto out;
+    }
+
+    /* set gid */
+    if (setgid(pw->pw_gid) == -1) {
+	fatal("setgid(%d) error: %s", pw->pw_gid, strerror(errno));
+	exit_status = 111;
+	goto out;
+    }
+
+    /* set uid */
+    if (setuid(pw->pw_uid) == -1) {
+	fatal("setuid(%d) error: %s", pw->pw_uid, strerror(errno));
+	exit_status = 111;
+	goto out;
+    }
 
     /* execute the program, if any */
     if (optind < argc) {
