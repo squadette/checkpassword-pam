@@ -1,0 +1,10 @@
+Makefile
+.deps
+config.h
+checkpassword-pam
+config.status
+config.log
+autom4te.cache
+stamp-h
+stamp-h1
+local-configure.sh
