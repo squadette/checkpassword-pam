@@ -19,5 +19,7 @@
         and environment variables.  (Idea and original patch from
         Frank Benkstein.)
 
+	Updated to Autoconf 2.57 and Automake 1.7.5
+
 0.95
         Initial version.
