@@ -34,7 +34,7 @@ static int opt_dont_set_env = 0;
 static int opt_dont_chdir_home = 0;
 int opt_use_stdout = 0;
 
-static const char* short_options = "dehs:V";
+static const char* short_options = "dehs:HV";
 
 enum { OPT_STDOUT = 1 };
 static struct option long_options[] = {
