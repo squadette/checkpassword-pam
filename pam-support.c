@@ -103,7 +103,7 @@ authenticate_using_pam (const char* service_name,
 	fatal("Initialization failed: %s", pam_strerror(pamh, retval));
 	return 111;
     }
-    debugging("Pam library initialization succeeded");
+    debugging("PAM library initialization succeeded");
 
     /* provided by tcpserver */
     remoteip = getenv("TCPREMOTEIP");
