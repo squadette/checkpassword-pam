@@ -4,6 +4,7 @@ Makefile
 autom4te.cache
 build-stamp
 checkpassword-pam
+checkpassword-pam-*.diff.gz
 checkpassword-pam.spec
 config.h
 config.log
