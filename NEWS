@@ -8,5 +8,9 @@
 
         Add PAM session patch from http://www.pjwstk.edu.pl/~bartek/
 
+        Set $USER, $HOME, and $SHELL environment variables, to conform
+        to checkpassword interface more strictly.  Patch from Stefan
+        Aeschbacher.
+
 0.95
         Initial version.

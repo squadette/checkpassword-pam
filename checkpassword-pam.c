@@ -214,6 +214,27 @@ main (int argc, char *argv[])
 	goto out;
     }
 
+    /* set $USER */
+    if (setenv("USER", username, 1) == -1) {
+	fatal("Error setting $USER to %s: %s", username, strerror(errno));
+	exit_status = 111;
+	goto out;
+    }
+
+    /* set $HOME */
+    if (setenv("HOME", pw->pw_dir, 1) == -1) {
+	fatal("Error setting $HOME to %s: %s", pw->pw_dir, strerror(errno));
+	exit_status = 111;
+	goto out;
+    }
+
+    /* set $SHELL */
+    if (setenv("SHELL", pw->pw_shell, 1) == -1) {
+	fatal("Error setting $SHELL to %s: %s", pw->pw_shell, strerror(errno));
+	exit_status = 111;
+	goto out;
+    }
+
     /* execute the program, if any */
     if (optind < argc) {
 	debugging("Executing %s", argv[optind]);
