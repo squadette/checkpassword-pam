@@ -1,3 +1,8 @@
+0.97
+
+        Brown paper bug with -e handling (one too many negations)
+        (noted by Sigurbjörn Birkir Lárusson)
+
 0.96
 
         Remove --stdin option, because manual testing could be done

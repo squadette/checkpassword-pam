@@ -184,7 +184,7 @@ main (int argc, char *argv[])
     if (exit_status != 0)
 	goto out;
 
-    if (!opt_dont_set_env)
+    if (opt_dont_set_env)
       goto execute_program; /* skip setting up process environment */
 
     /* switch to proper uid/gid/groups */
