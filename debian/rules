@@ -9,11 +9,12 @@ export DH_VERBOSE=1
 # debhelper compatibility version to use
 export DH_COMPAT=2
 
+.PHONY: configure
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	./configure --prefix=/usr
-	touch configure.stamp
+	./configure --prefix=/usr --mandir=/usr/share/man
+	touch $@
 
 .PHONY: build
 build: configure-stamp build-stamp
@@ -21,12 +22,15 @@ build-stamp:
 	dh_testdir
 
 	$(MAKE)
-	touch build-stamp
+
+	touch $@
 
 .PHONY: clean
 clean:
 	dh_testdir
 	dh_testroot
+
+	rm -f configure-stamp build-stamp
 
 	-$(MAKE) distclean
 
@@ -51,8 +55,9 @@ binary-arch:
 	dh_testdir
 	dh_testroot
 	dh_movefiles
+	dh_install
 	dh_installdocs
-	dh_installmanpages
+	dh_installman
 	dh_installchangelogs NEWS
 	dh_strip
 	dh_fixperms

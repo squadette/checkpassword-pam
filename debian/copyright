@@ -1,0 +1,12 @@
+This package was debianized by Alexey Mahotkin <alexm@hsys.msk.ru> on
+7 Aug 2003.
+
+Original source can be found at http://checkpasswd-pam.sourceforge.net/
+
+Copyright (C) 2001-2003 Alexey Mahotkin
+
+checkpassword-pam is licensed under the GNU General Public License
+version 2 or higher.
+
+On Debian systems the full text of these two licenses can be found in
+/usr/share/common-licenses/GPL file.
