@@ -2,3 +2,5 @@
 checkpassword-pam is an implementation of checkpassword-compatible
 authentication program.
 
+Checkpassword is described in <URL:http://cr.yp.to/checkpwd.html>
+
