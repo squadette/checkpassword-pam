@@ -77,7 +77,7 @@ man_MANS = checkpassword-pam.8
 
 bin_PROGRAMS = checkpassword-pam
 
-checkpassword_pam_SOURCES = checkpassword-pam.c logging.h
+checkpassword_pam_SOURCES = checkpassword-pam.c logging.h pam-support.h pam-support.c
 
 EXTRA_DIST = $(man_MANS) interface.html
 subdir = .
@@ -88,7 +88,8 @@ CONFIG_CLEAN_FILES =
 bin_PROGRAMS = checkpassword-pam$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
-am_checkpassword_pam_OBJECTS = checkpassword-pam.$(OBJEXT)
+am_checkpassword_pam_OBJECTS = checkpassword-pam.$(OBJEXT) \
+	pam-support.$(OBJEXT)
 checkpassword_pam_OBJECTS = $(am_checkpassword_pam_OBJECTS)
 checkpassword_pam_LDADD = $(LDADD)
 checkpassword_pam_DEPENDENCIES =
@@ -100,7 +101,8 @@ CPPFLAGS = @CPPFLAGS@
 LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
-@AMDEP_TRUE@DEP_FILES = $(DEPDIR)/checkpassword-pam.Po
+@AMDEP_TRUE@DEP_FILES = $(DEPDIR)/checkpassword-pam.Po \
+@AMDEP_TRUE@	$(DEPDIR)/pam-support.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
@@ -194,6 +196,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/checkpassword-pam.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/pam-support.Po@am__quote@
 
 distclean-depend:
 	-rm -rf $(DEPDIR)
