@@ -1,3 +1,8 @@
+1.00
+
+	Improve Darwin compatibility.  (It has <pam/pam_appl.h>).
+	Thanks to Robert Shaw.
+
 0.99
 
 	Set PAM_RHOST to value of TCPREMOTEIP, which is set by

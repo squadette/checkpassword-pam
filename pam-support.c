@@ -21,7 +21,14 @@
 
 #include "logging.h"
 
+#ifdef HAVE_SECURITY_PAM_APPL_H
 #include <security/pam_appl.h>
+#endif
+
+#ifdef HAVE_PAM_PAM_APPL_H
+#include <pam/pam_appl.h>
+#endif
+
 #include <stdlib.h>
 #include <string.h>
 
