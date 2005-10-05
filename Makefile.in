@@ -117,7 +117,7 @@ man_MANS = checkpassword-pam.8
 bin_PROGRAMS = checkpassword-pam
 
 checkpassword_pam_SOURCES = checkpassword-pam.c logging.h pam-support.h pam-support.c \
-                            getopt.h getopt.c getopt1.c
+                            getopt.h getopt.c getopt1.c setenv.c ansidecl.h
 
 
 EXTRA_DIST = $(man_MANS) interface.html \
@@ -135,7 +135,8 @@ bin_PROGRAMS = checkpassword-pam$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
 am_checkpassword_pam_OBJECTS = checkpassword-pam.$(OBJEXT) \
-	pam-support.$(OBJEXT) getopt.$(OBJEXT) getopt1.$(OBJEXT)
+	pam-support.$(OBJEXT) getopt.$(OBJEXT) getopt1.$(OBJEXT) \
+	setenv.$(OBJEXT)
 checkpassword_pam_OBJECTS = $(am_checkpassword_pam_OBJECTS)
 checkpassword_pam_LDADD = $(LDADD)
 checkpassword_pam_DEPENDENCIES =
@@ -146,7 +147,7 @@ depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/checkpassword-pam.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/getopt.Po ./$(DEPDIR)/getopt1.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/pam-support.Po
+@AMDEP_TRUE@	./$(DEPDIR)/pam-support.Po ./$(DEPDIR)/setenv.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
@@ -239,6 +240,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/getopt.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/getopt1.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pam-support.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/setenv.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" \
