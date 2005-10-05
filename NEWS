@@ -3,6 +3,9 @@
 	Improve Darwin compatibility.  (It has <pam/pam_appl.h>).
 	Thanks to Robert Shaw.
 
+        Fix Solaris compatibility (it has no setenv(), so use one from
+        GNU libiberty).   Thanks to Victor Dronov.
+
 0.99
 
 	Set PAM_RHOST to value of TCPREMOTEIP, which is set by
