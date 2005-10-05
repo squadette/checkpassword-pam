@@ -9,7 +9,7 @@
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
    General Public License for more details.
 
-   Copyright (c) Alexey Mahotkin <alexm@hsys.msk.ru> 2002-2004
+   Copyright (c) Alexey Mahotkin <alexm@hsys.msk.ru> 2002-2005
 
    PAM support for checkpassword-pam
 
@@ -25,15 +25,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-static const char* global_password;
-
 static int
 conversation (int num_msg, const struct pam_message **msgs,
 	      struct pam_response **resp, void *appdata_ptr)
 {
     int i;
     struct pam_response* responses;
-    (void) appdata_ptr;
+    char *password = appdata_ptr;
 
     /* safety check */
     if (num_msg <= 0) {
@@ -64,7 +62,7 @@ conversation (int num_msg, const struct pam_message **msgs,
 	switch (msg->msg_style) {
 	case PAM_PROMPT_ECHO_OFF:
 	    /* reply with password */
-	    response->resp = strdup(global_password);
+	    response->resp = strdup(password);
 	    if (!response->resp)
 		return PAM_CONV_ERR;
 	    break;
@@ -86,15 +84,12 @@ conversation (int num_msg, const struct pam_message **msgs,
 int
 authenticate_using_pam (const char* service_name,
 			const char* username,
-			const char* password)
+			char* password)
 {
-    struct pam_conv pam_conversation = { conversation, NULL };
+    struct pam_conv pam_conversation = { conversation, password };
     pam_handle_t* pamh;
     int retval;
     char *remoteip;
-
-    /* to be used later from conversation() */
-    global_password = password;
 
     /* initialize the PAM library */
     debugging("Initializing PAM library using service name '%s'", service_name);
