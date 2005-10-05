@@ -9,7 +9,7 @@
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
    General Public License for more details.
 
-   Copyright (c) Alexey Mahotkin <alexm@hsys.msk.ru> 2002-2004
+   Copyright (c) Alexey Mahotkin <alexm@hsys.msk.ru> 2002-2005
 
 */
 
@@ -194,6 +194,13 @@ main (int argc, char *argv[])
     if (exit_status != 0)
 	goto out;
 
+    /* set $USER */
+    if (setenv("USER", username, 1) == -1) {
+	fatal("Error setting $USER to %s: %s", username, strerror(errno));
+	exit_status = 111;
+	goto out;
+    }
+
     if (opt_dont_set_env)
       goto execute_program; /* skip setting up process environment */
 
@@ -234,13 +241,6 @@ main (int argc, char *argv[])
 	    exit_status = 1;
 	    goto out;
 	}
-    }
-
-    /* set $USER */
-    if (setenv("USER", username, 1) == -1) {
-	fatal("Error setting $USER to %s: %s", username, strerror(errno));
-	exit_status = 111;
-	goto out;
     }
 
     /* set $HOME */
