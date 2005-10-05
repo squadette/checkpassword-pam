@@ -20,7 +20,7 @@
 
 int authenticate_using_pam (const char* service_name,
 			    const char* username,
-			    const char* password);
+			    char* password);
 
 #endif /* PAM_SUPPORT_H_ */
 
