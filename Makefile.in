@@ -50,6 +50,7 @@ AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
+CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
@@ -57,6 +58,7 @@ DEPDIR = @DEPDIR@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
+EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -122,6 +124,8 @@ EXTRA_DIST = $(man_MANS) interface.html \
              debian/changelog debian/control debian/copyright \
              debian/docs debian/*.files debian/*.manpages debian/rules
 
+
+DIFF_FILENAME = $(PACKAGE)-$(PREVIOUS_VERSION)-$(VERSION).diff
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
@@ -152,7 +156,7 @@ DIST_SOURCES = $(checkpassword_pam_SOURCES)
 NROFF = nroff
 MANS = $(man_MANS)
 DIST_COMMON = README $(srcdir)/Makefile.in $(srcdir)/configure AUTHORS \
-	COPYING ChangeLog INSTALL Makefile.am NEWS aclocal.m4 \
+	COPYING ChangeLog INSTALL Makefile.am NEWS TODO aclocal.m4 \
 	checkpassword-pam.spec.in config.h.in configure configure.ac \
 	depcomp install-sh missing mkinstalldirs
 SOURCES = $(checkpassword_pam_SOURCES)
@@ -573,7 +577,10 @@ diff:
 	tar zxfv $(PACKAGE)-$(PREVIOUS_VERSION).tar.gz
 	tar zxfv $(PACKAGE)-$(VERSION).tar.gz
 	diff -ruN $(PACKAGE)-$(PREVIOUS_VERSION)/ $(PACKAGE)-$(VERSION)/ > \
-		$(PACKAGE)-$(PREVIOUS_VERSION)-$(VERSION).diff; /bin/true
+		$(DIFF_FILENAME).tmp; /bin/true
+	diffstat $(DIFF_FILENAME).tmp > $(DIFF_FILENAME)
+	cat $(DIFF_FILENAME).tmp >> $(DIFF_FILENAME)
+	rm $(DIFF_FILENAME).tmp
 	gzip $(PACKAGE)-$(PREVIOUS_VERSION)-$(VERSION).diff
 	rm -rf ./$(PACKAGE)-$(PREVIOUS_VERSION)/ $(PACKAGE)-$(VERSION)/
 
