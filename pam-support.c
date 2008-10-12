@@ -9,7 +9,7 @@
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
    General Public License for more details.
 
-   Copyright (c) Alexey Mahotkin <alexm@hsys.msk.ru> 2002-2005
+   Copyright (c) Alexey Mahotkin <squadette@gmail.com> 2002-2005
 
    PAM support for checkpassword-pam
 
