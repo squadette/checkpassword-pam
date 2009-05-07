@@ -1,3 +1,9 @@
+checkpassword-pam (1.00rc-1) unstable; urgency=low
+
+  * Update to 1.00rc.
+
+ -- Alexey Mahotkin <squadette@gmail.com>  Thu, 7 May 2009 19:55:36 +0400
+
 checkpassword-pam (0.99-1) unstable; urgency=low
 
   * Update to 0.99.
