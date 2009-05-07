@@ -6,6 +6,10 @@
         Fix Solaris compatibility (it has no setenv(), so use one from
         GNU libiberty).   Thanks to Victor Dronov.
 
+	Fedora packaging updated.
+
+	Updated to Autoconf 2.61 and Automake 1.10.
+
 0.99
 
 	Set PAM_RHOST to value of TCPREMOTEIP, which is set by
