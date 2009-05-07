@@ -32,6 +32,11 @@ upload:
 	ncftpput upload.sourceforge.net /incoming \
 		$(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)-$(PREVIOUS_VERSION)-$(VERSION).diff.gz
 
+.PHONY: rpm
+rpm: dist $(PACKAGE).spec
+	sudo cp $(PACKAGE)-$(PREVIOUS_VERSION).tar.gz /usr/src/redhat/SOURCES/
+	sudo rpmbuild -ba $(PACKAGE).spec
+
 .PHONY: deb
 deb: dist
 	rm -rf tmp/
