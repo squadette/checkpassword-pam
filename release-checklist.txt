@@ -2,9 +2,6 @@
 CHECKLIST FOR CHECKPASSWORD-PAM RELEASES
 =========================================
 
-$Id: release-checklist.txt,v 1.5 2004/09/22 20:05:55 tyranny Exp $
-
-
 Suppose we're releasing checkpassword-pam X.YZ, while the previous
 version was X.YT.
 
@@ -27,11 +24,13 @@ Packaging
 - examine diff, ensure everything from there is mentioned in NEWS
   file;
 
-- cvs commit everything;
+- git status must show no uncommitted changes;
+
+- git push origin master;
 
 - make upload;
 
-- cvs rtag CHECKPASSWORD-PAM-X-YZ checkpassword-pam;
+- git tag x.yz;
 
 
 SourceForge
@@ -80,5 +79,3 @@ Freshmeat
 - concisely describe new release;
 
 - proceed to checkout;
-
-
