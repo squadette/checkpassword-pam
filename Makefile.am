@@ -34,8 +34,8 @@ upload:
 
 .PHONY: rpm
 rpm: dist $(PACKAGE).spec
-	sudo cp $(PACKAGE)-$(PREVIOUS_VERSION).tar.gz /usr/src/redhat/SOURCES/
-	sudo rpmbuild -ba $(PACKAGE).spec
+	cp $(PACKAGE)-$(VERSION).tar.gz ~/rpmbuild/SOURCES/
+	rpmbuild -ba $(PACKAGE).spec
 
 .PHONY: deb
 deb: dist
